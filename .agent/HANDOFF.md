@@ -11,13 +11,14 @@
 - The user's live router returns five configured models, four at context `163840`, one IQ3_S model at `98304`, all with output `32768`.
 - In an isolated OpenCode 2.0.8 server, provider and model transforms executed but explicit JSONC model limits still took precedence in `/api/model`. The initial in-memory approach did not achieve the requested catalog result.
 - A V2 plugin that edits only matching JSONC `limit.context` and `limit.output` values was loaded as an active local package. Its isolated catalog showed Tiel `163840/32768` and Qwen IQ3_S `98304/32768`, replacing test values `65536/4096`. The test used an isolated `XDG_CONFIG_HOME`; the user's global config was not changed.
+- OpenCode 2.0.8 `plugin add github:pwnedbygary/llama-router-limits` accepted and cached the public package in an isolated `XDG_CONFIG_HOME`; an isolated server logged loading it from the Git package cache. That fresh config had only `opencode.json`, so sync skipped because `opencode.jsonc` was absent. This does not establish real-user installation or managed-update behavior.
 
 ## Current implementation
 
 - `plugin/llama-router-limits.js`: V2 lifecycle, router fetch/validation, five-minute refresh.
 - `plugin/config-sync.js`: narrow JSONC edits, explicit upstream-ID matching, concurrent-change check, timestamped backup, atomic replacement. A simultaneous edit in the final instant before replacement remains possible.
 - `install.sh` and `uninstall.sh`: isolated package-directory installation and recoverable removal.
-- `index.js` and `package.json`: package entrypoint for future OpenCode-managed Git updates.
+- `index.js` and `package.json`: package entrypoint for OpenCode-managed Git installation and updates.
 - Tests use observed router IDs and exercise config preservation, explicit upstream-ID precedence, missing fields, backups, and offline behavior.
 
 ## Checks actually run
@@ -34,4 +35,4 @@
 
 - First independent review found a README GitHub repository-name mismatch; this was corrected. A subsequent full review found a model-key fallback that could write limits to an explicitly different upstream ID; fixed with a regression test. Final rereview passed.
 - Initial reviewed source committed as `b4daec9` and pushed to `origin/main`. GitHub repository is public; unauthenticated GitHub API access was verified. The source archive is `llama-router-limits-0.1.0.tar.gz` in the local repository root and is not committed.
-- The plugin has not been installed into the user's real OpenCode configuration. Next step is user-led installation and verification, then native GitHub package update testing. Do not assume either has already passed.
+- The plugin has not been installed into the user's real OpenCode configuration. The README now recommends the officially documented GitHub package install, with local scripts as an alternative. Next step is user-led installation and verification, then native GitHub package update testing. Do not assume either has already passed.

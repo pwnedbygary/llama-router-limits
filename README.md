@@ -51,23 +51,19 @@ These values were cross-checked against `/home/garyb/Mounts/NVME/llama.cpp/prese
 
 The plugin targets and was type-checked against `@opencode/plugin` 2.0.8, matching the installed `opencode v2.0.8` used for development.
 
-## Install
+## Install (recommended: OpenCode plugin manager)
 
-From this repository root (or an extracted archive), run:
+OpenCode's [official plugin documentation](https://opencode.ai/v2/docs/plugins) supports GitHub package specifiers and the `plugin add`, `list`, `check`, and `update` commands. This public repository can be installed without cloning it:
 
 ```bash
-chmod +x install.sh uninstall.sh
-./install.sh
+opencode plugin add github:pwnedbygary/llama-router-limits
 opencode service restart
+opencode plugin list
 ```
 
-OpenCode globally discovers package directories under:
+Run `plugin list` after restarting so it reflects the newly loaded plugin rather than an already-running server. The plugin manager records the GitHub package in OpenCode's global configuration and downloads its runtime dependency. OpenCode 2.0.8 accepted this GitHub specifier and loaded the package in an isolated test; synchronization against the user's real OpenCode config has not yet been tested.
 
-```text
-~/.config/opencode/plugins/
-```
-
-The installer puts the package at `~/.config/opencode/plugins/llama-router-limits/` and installs its small `jsonc-parser` runtime dependency there. It does not edit the `plugins` array. If an earlier local copy exists, the installer moves it into `~/.config/opencode/plugin-backups/`.
+This plugin expects an existing `~/.config/opencode/opencode.jsonc` with the `llama-cpp-router` provider. In a fresh isolated config containing only `opencode.json`, package loading succeeded but limit synchronization safely skipped because that JSONC file did not exist.
 
 With server logs enabled, a successful initial fetch reports:
 
@@ -77,19 +73,9 @@ With server logs enabled, a successful initial fetch reports:
 
 Then confirm the five model limits in OpenChamber or through the OpenCode model catalog.
 
-`opencode plugin list` manages configured npm/Git packages and may not display a directly discovered local directory. This is expected for the archive-based development install.
+## Updates
 
-## Seamless updates after GitHub publication
-
-This package has a publishable `exports` entry, so it can use OpenCode's native package manager from the public GitHub repository:
-
-```bash
-./uninstall.sh
-opencode plugin add github:pwnedbygary/llama-router-limits
-opencode service restart
-```
-
-From then on, updates use the same commands as other OpenCode plugins:
+The managed GitHub installation uses the same update commands as other OpenCode plugins:
 
 ```bash
 opencode plugin check
@@ -103,7 +89,18 @@ Or update every managed plugin together:
 opencode plugin update
 ```
 
-Uninstall the local development copy before adding the GitHub package to avoid a duplicate plugin ID. OpenCode checks unpinned Git packages in the background and its explicit update command refreshes them. Pinning a full commit intentionally disables update checks for that entry.
+OpenCode checks unpinned Git packages in the background and its explicit update command refreshes them. Pinning a full commit intentionally disables update checks for that entry.
+
+## Local development install (alternative)
+
+From this repository root (or an extracted archive), run:
+
+```bash
+./install.sh
+opencode service restart
+```
+
+This installs under `~/.config/opencode/plugins/llama-router-limits/` using OpenCode's local-plugin discovery. It does not add a managed package entry, so `opencode plugin list` may not display it. The installer moves any prior local copy into `~/.config/opencode/plugin-backups/`. Remove a local copy with `./uninstall.sh` before using `opencode plugin add` to avoid a duplicate plugin ID.
 
 ## Configuration
 
@@ -121,7 +118,7 @@ If the plugin is loaded explicitly as a package/path entry, equivalent OpenCode 
 
 ## Test
 
-The test suite uses Node's built-in test runner. The archive's local installer runs `npm ci` inside its private plugin directory; it needs npm and network access on first install.
+The test suite uses Node's built-in test runner. The alternative local installer runs `npm ci` inside its private plugin directory; it needs npm and network access on first install.
 
 ```bash
 npm install
@@ -134,14 +131,21 @@ The unit tests cover the five observed model IDs, alternate `--flag=value` synta
 
 ## Uninstall
 
-From the extracted package directory:
+For a managed GitHub installation:
+
+```bash
+opencode plugin remove github:pwnedbygary/llama-router-limits
+opencode service restart
+```
+
+For the alternative local development install, from the repository root or extracted archive:
 
 ```bash
 ./uninstall.sh
 opencode service restart
 ```
 
-The uninstaller moves only `~/.config/opencode/plugins/llama-router-limits/` into `~/.config/opencode/plugin-backups/` for recovery. It does not revert model limits already synchronized into `opencode.jsonc`; use the timestamped config backup if a rollback is needed.
+The local uninstaller moves only `~/.config/opencode/plugins/llama-router-limits/` into `~/.config/opencode/plugin-backups/` for recovery. Neither removal method reverts model limits already synchronized into `opencode.jsonc`; use the timestamped config backup if a rollback is needed.
 
 ## API basis
 
