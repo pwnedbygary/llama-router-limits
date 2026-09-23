@@ -15,7 +15,7 @@
 
 ## Current implementation
 
-- `plugin/llama-router-limits.js`: V2 lifecycle, router fetch/validation, five-minute refresh.
+- `plugin/llama-router-limits.js`: V2 lifecycle, router fetch/validation, 30-second default refresh (overridable).
 - `plugin/config-sync.js`: narrow JSONC edits, explicit upstream-ID matching, concurrent-change check, timestamped backup, atomic replacement. A simultaneous edit in the final instant before replacement remains possible.
 - `install.sh` and `uninstall.sh`: isolated package-directory installation and recoverable removal.
 - `index.js` and `package.json`: package entrypoint for OpenCode-managed Git installation and updates.
@@ -23,7 +23,7 @@
 
 ## Checks actually run
 
-- `npm test`: 7 passed after the explicit-ID regression fix.
+- `npm test`: 7 passed after the explicit-ID regression fix and 30-second default assertion.
 - `npm run typecheck`: passed against `@opencode/plugin` 2.0.8.
 - `npm run test:live`: matched five live router models.
 - `npm pack --dry-run`: 7 expected publishable files.
@@ -35,4 +35,5 @@
 
 - First independent review found a README GitHub repository-name mismatch; this was corrected. A subsequent full review found a model-key fallback that could write limits to an explicitly different upstream ID; fixed with a regression test. Final rereview passed.
 - Initial reviewed source committed as `b4daec9` and pushed to `origin/main`. GitHub repository is public; unauthenticated GitHub API access was verified. The source archive is `llama-router-limits-0.1.0.tar.gz` in the local repository root and is not committed.
-- The plugin has not been installed into the user's real OpenCode configuration. The README now recommends the officially documented GitHub package install, with local scripts as an alternative. Next step is user-led installation and verification, then native GitHub package update testing. Do not assume either has already passed.
+- The GitHub plugin is installed in the user's real OpenCode configuration and was logged loading in OpenChamber's managed OpenCode 2.0.15 server. A live preset `n-predict` change for Qwen IQ3_S from `32768` to `32767` propagated through the router and the five-minute plugin refresh into OpenCode; the preset was restored byte-for-byte and a fresh standalone OpenCode startup synchronized the config back to `32768`.
+- Current change: reduce the default refresh to 30 seconds, update README/changelog, and assert the scheduled delay in the setup test. `npm test` (7/7), `npm run typecheck`, `node --check`, `npm run test:live` (5 models), and `git diff --check` passed. `npm ci` reported 11 moderate development-dependency advisories and blocked optional install scripts. GitHub update and restart of the running OpenChamber server remain unverified for this change.

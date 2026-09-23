@@ -6,7 +6,7 @@ import { syncConfigFile } from "./config-sync.js"
 const DEFAULTS = Object.freeze({
   providerID: "llama-cpp-router",
   routerURL: "http://127.0.0.1:8080/models?reload=1",
-  refreshIntervalMs: 300_000,
+  refreshIntervalMs: 30_000,
   requestTimeoutMs: 5_000,
 })
 

@@ -8,7 +8,7 @@ The default configuration is tailored to this setup:
 - Router endpoint: `http://127.0.0.1:8080/models?reload=1`
 - Context source: `status.args` → `--ctx-size`
 - Output source: `status.args` → `--n-predict`
-- Refresh interval: 5 minutes
+- Refresh interval: 30 seconds
 
 ## What it changes
 
@@ -111,7 +111,7 @@ Defaults work without configuration. The following environment variables are opt
 | `OPENCODE_LLAMA_ROUTER_PROVIDER_ID` | `llama-cpp-router` |
 | `OPENCODE_LLAMA_ROUTER_URL` | `http://127.0.0.1:8080/models?reload=1` |
 | `OPENCODE_LLAMA_ROUTER_CONFIG_PATH` | `~/.config/opencode/opencode.jsonc` |
-| `OPENCODE_LLAMA_ROUTER_REFRESH_MS` | `300000` |
+| `OPENCODE_LLAMA_ROUTER_REFRESH_MS` | `30000` |
 | `OPENCODE_LLAMA_ROUTER_TIMEOUT_MS` | `5000` |
 
 If the plugin is loaded explicitly as a package/path entry, equivalent OpenCode plugin options are `providerID`, `routerURL`, `configPath`, `refreshIntervalMs`, and `requestTimeoutMs`. Plugin options take precedence over environment variables.

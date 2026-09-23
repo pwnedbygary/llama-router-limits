@@ -161,8 +161,14 @@ test("V2 setup synchronizes on startup and keeps config when router is offline",
   })
   await writeFile(configPath, original)
   const originalFetch = globalThis.fetch
+  const originalSetInterval = globalThis.setInterval
+  const scheduledIntervals = []
 
   try {
+    globalThis.setInterval = (callback, delay) => {
+      scheduledIntervals.push(delay)
+      return originalSetInterval(callback, delay)
+    }
     globalThis.fetch = async () => new Response(JSON.stringify(fixture), { status: 200 })
     const cleanup = await plugin.setup({ options: { configPath } })
     assert.deepEqual(
@@ -177,7 +183,9 @@ test("V2 setup synchronizes on startup and keeps config when router is offline",
     const offlineCleanup = await plugin.setup({ options: { configPath } })
     assert.equal(await readFile(configPath, "utf8"), original)
     offlineCleanup()
+    assert.deepEqual(scheduledIntervals, [30_000, 30_000])
   } finally {
     globalThis.fetch = originalFetch
+    globalThis.setInterval = originalSetInterval
   }
 })

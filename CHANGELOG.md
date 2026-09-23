@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+- Shorten the default router refresh interval from five minutes to 30 seconds.
+
 ## 0.1.0 - 2026-09-23
 
 - Add an OpenCode 2 plugin that synchronizes llama.cpp router limits into the existing JSONC config.
