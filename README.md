@@ -81,7 +81,7 @@ Then confirm the five model limits in OpenChamber or through the OpenCode model 
 
 ## Seamless updates after GitHub publication
 
-This package has a publishable `exports` entry, so it can use OpenCode's native package manager from the GitHub repository. Because the repository is currently private, installation requires GitHub access from the machine running OpenCode:
+This package has a publishable `exports` entry, so it can use OpenCode's native package manager from the public GitHub repository:
 
 ```bash
 ./uninstall.sh
