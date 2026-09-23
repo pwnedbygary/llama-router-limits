@@ -1,0 +1,38 @@
+{
+  "name": "opencode-llama-router-limits",
+  "version": "0.1.0",
+  "description": "OpenCode 2 plugin that synchronizes llama.cpp router context and output limits",
+  "type": "module",
+  "license": "MIT",
+  "exports": {
+    ".": "./index.js"
+  },
+  "files": [
+    "index.js",
+    "plugin/",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md"
+  ],
+  "keywords": [
+    "opencode",
+    "opencode-plugin",
+    "llama.cpp",
+    "context-window"
+  ],
+  "scripts": {
+    "test": "node --test test/llama-router-limits.test.js",
+    "test:live": "node test/live-router.js",
+    "typecheck": "tsc --noEmit --allowJs --checkJs --module NodeNext --moduleResolution NodeNext --target ES2022 plugin/llama-router-limits.js"
+  },
+  "dependencies": {
+    "jsonc-parser": "3.3.1"
+  },
+  "devDependencies": {
+    "@opencode/plugin": "2.0.8",
+    "typescript": "5.8.2"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}

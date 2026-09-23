@@ -1,0 +1,58 @@
+{
+  "object": "list",
+  "data": [
+    {
+      "id": "CYBER-TIEL-CODER-35B-A3B-Q4_K_XL",
+      "object": "model",
+      "status": {
+        "value": "unloaded",
+        "args": [
+          "/home/garyb/.local/bin/llama",
+          "serve",
+          "--alias",
+          "CYBER-TIEL-CODER-35B-A3B-Q4_K_XL",
+          "--ctx-size",
+          "163840",
+          "--n-predict",
+          "32768"
+        ]
+      },
+      "n_ctx": null,
+      "context_length": null,
+      "max_context_length": null,
+      "context_size": null
+    },
+    {
+      "id": "Dirk-3.8-27B-IQ3_XXS-MTP",
+      "object": "model",
+      "status": {
+        "value": "unloaded",
+        "args": ["llama", "serve", "--ctx-size", "163840", "--n-predict", "32768"]
+      }
+    },
+    {
+      "id": "Qwen3.8-27B-GSQ-RCO-IQ3_S-MTP",
+      "object": "model",
+      "status": {
+        "value": "unloaded",
+        "args": ["llama", "serve", "--ctx-size", "98304", "--n-predict", "32768"]
+      }
+    },
+    {
+      "id": "Qwen3.8-27B-GSQ-RCO-IQ3_XXS-MTP",
+      "object": "model",
+      "status": {
+        "value": "unloaded",
+        "args": ["llama", "serve", "--ctx-size", "163840", "--n-predict", "32768"]
+      }
+    },
+    {
+      "id": "TIEL-CODER-35B-A3B-Q4_K_XL",
+      "object": "model",
+      "status": {
+        "value": "unloaded",
+        "args": ["llama", "serve", "--ctx-size", "163840", "--n-predict", "32768"]
+      }
+    }
+  ]
+}
