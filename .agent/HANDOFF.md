@@ -2,7 +2,7 @@
 
 ## Scope and baseline
 
-- New repository at `/home/garyb/LLM-Projects/llama-router-limits` on `main`; initialized with no commits or remote.
+- Repository at `/home/garyb/LLM-Projects/llama-router-limits` on `main`; GitHub remote: `https://github.com/pwnedbygary/llama-router-limits` (private).
 - Build a native OpenCode 2.0.8 plugin for the existing `llama-cpp-router` provider. The router's resolved `status.args` supplies `--ctx-size` and `--n-predict`.
 - Preserve every other provider/model config field; skip writes when the router or data is unavailable; provide local install/uninstall and a future GitHub update path.
 
@@ -32,6 +32,6 @@
 
 ## Review and publication state
 
-- First independent review found a README GitHub repository-name mismatch; this was corrected. A subsequent full review found a model-key fallback that could write limits to an explicitly different upstream ID; fixed with a regression test. Final rereview is pending.
-- No commit or push yet. No GitHub remote exists; repository publication is deferred at the user's request.
-- Next action: freeze current snapshot, independent read-only review, resolve findings and rereview if needed, commit reviewed files, and create the source archive. Do not publish a GitHub repository yet.
+- First independent review found a README GitHub repository-name mismatch; this was corrected. A subsequent full review found a model-key fallback that could write limits to an explicitly different upstream ID; fixed with a regression test. Final rereview passed.
+- Initial reviewed source committed as `b4daec9` and pushed to `origin/main`. GitHub repository is private. The source archive is `llama-router-limits-0.1.0.tar.gz` in the local repository root and is not committed.
+- The plugin has not been installed into the user's real OpenCode configuration. Next step is user-led installation and verification, then native GitHub package update testing once GitHub authentication is available to OpenCode. Do not assume either has already passed.

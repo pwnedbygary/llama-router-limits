@@ -81,11 +81,11 @@ Then confirm the five model limits in OpenChamber or through the OpenCode model 
 
 ## Seamless updates after GitHub publication
 
-This package has a publishable `exports` entry, so it can use OpenCode's native package manager as soon as the repository is published. Replace `<owner>` with the eventual GitHub owner:
+This package has a publishable `exports` entry, so it can use OpenCode's native package manager from the GitHub repository. Because the repository is currently private, installation requires GitHub access from the machine running OpenCode:
 
 ```bash
 ./uninstall.sh
-opencode plugin add github:<owner>/llama-router-limits
+opencode plugin add github:pwnedbygary/llama-router-limits
 opencode service restart
 ```
 
@@ -93,7 +93,7 @@ From then on, updates use the same commands as other OpenCode plugins:
 
 ```bash
 opencode plugin check
-opencode plugin update github:<owner>/llama-router-limits
+opencode plugin update github:pwnedbygary/llama-router-limits
 opencode service restart
 ```
 
